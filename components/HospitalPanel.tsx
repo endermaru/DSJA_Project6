@@ -19,19 +19,33 @@ type Props = {
   hospitals: Hospital[];
   currentLocation: [number, number] | null;
   onSelect: (hospital: Hospital) => void;
+  onMoveMap: (coords: [number, number]) => void;
 };
 
-const HospitalPanel: React.FC<Props> = ({ hospitals, currentLocation, onSelect }) => {
+const HospitalPanel: React.FC<Props> = ({ hospitals, currentLocation, onSelect, onMoveMap }) => {
   const [filterType, setFilterType] = useState("nearby");
   const [filteredHospitals, setFilteredHospitals] = useState<Hospital[]>([]);
 
+  const [regionData, setRegionData] = useState<Record<string, Record<string, { 위도: number; 경도: number }>>>({});
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
 
-  const cities = [...new Set(hospitals.map((h) => h.city))]; // 시도 리스트
-  const districts = selectedCity
-    ? [...new Set(hospitals.filter((h) => h.city === selectedCity).map((h) => h.district))]
-    : [];
+  useEffect(() => {
+    const fetchRegions = async () => {
+      try {
+        const response = await fetch("/data/selection_with_center.json");
+        const data = await response.json();
+        setRegionData(data);
+      } catch (error) {
+        console.error("지역 데이터를 불러오는 중 오류 발생:", error);
+      }
+    };
+
+    fetchRegions();
+  }, []);
+
+  const cities = Object.keys(regionData); // 시도 리스트
+  const districts = selectedCity ? Object.keys(regionData[selectedCity]) : [];
 
   useEffect(() => {
     if (filterType === "nearby" && currentLocation) {
@@ -47,6 +61,12 @@ const HospitalPanel: React.FC<Props> = ({ hospitals, currentLocation, onSelect }
       setFilteredHospitals(sortedHospitals);
     } else if (filterType === "region" && selectedCity && selectedDistrict) {
       setFilteredHospitals(hospitals.filter((h) => h.city === selectedCity && h.district === selectedDistrict));
+
+      // 선택된 지역으로 지도 이동
+      const selectedCoords = regionData[selectedCity]?.[selectedDistrict];
+      if (selectedCoords) {
+        onMoveMap([selectedCoords.경도, selectedCoords.위도]); // [lng, lat] 형태로 전달
+      }
     } else {
       setFilteredHospitals(hospitals);
     }
@@ -84,10 +104,7 @@ const HospitalPanel: React.FC<Props> = ({ hospitals, currentLocation, onSelect }
             </Select>
 
             {/* 시군구 선택 */}
-            <Select
-              onValueChange={(value) => setSelectedDistrict(value)}
-              disabled={!selectedCity}
-            >
+            <Select onValueChange={(value) => setSelectedDistrict(value)} disabled={!selectedCity}>
               <SelectTrigger>
                 <SelectValue placeholder="시군구 선택" />
               </SelectTrigger>

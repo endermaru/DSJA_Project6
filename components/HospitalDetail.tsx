@@ -34,24 +34,22 @@ const HospitalDetail: React.FC<{ hospital: Hospital | null }> = ({ hospital }) =
             <TableRow>
               <TableCell className="font-semibold">전화번호</TableCell>
               <TableCell className="text-blue-600">
-                <a href={`tel:${hospital.phone}`}>{hospital.phone}</a>
+                <a>{hospital.phone}</a>
               </TableCell>
             </TableRow>
-            {hospital.homePage && (
-              <TableRow>
-                <TableCell className="font-semibold">홈페이지</TableCell>
-                <TableCell>
-                  <a
-                    href={hospital.homePage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                  >
-                    방문하기
-                  </a>
-                </TableCell>
-              </TableRow>
-            )}
+            <TableRow>
+              <TableCell className="font-semibold">홈페이지</TableCell>
+              <TableCell>
+                <a
+                  href={hospital.homePage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  {hospital.homePage}
+                </a>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
