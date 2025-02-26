@@ -102,28 +102,24 @@ export default function Home() {
                 정신과, 상담센터, 정신건강복지센터… 어디로 가야하나?
               </h1>
               <p className="mb-4 text-xl">정신과 진료의 장벽을 더 알아보기 위해, 정신과 진료를 희망하는 사람들이 이용하는 지식인(Q&A 커뮤니티)을 조사했다. 분석 결과, 정신과 관련 질문에서 ‘치료’와 ‘병원’이 높은 비중을 차지했다. 이는 많은 이들이 진료 기관 선택에서 어려움을 겪고 있음을 보여준다.</p>
-              <div className="w-full flex justify-center">
-                <div className="w-full max-w-[700px]">
+            </div>
+
+            <div className="w-full flex flex-row justify-center gap-5 items-start mb-4">
+            
+              <div className="flex flex-col justify-center">
                 <WordCloud 
                   path="/data/questions.json" 
-                  title={
-                    <>
-                      네이버 지식iN '정신과 상담', '정신과 진료'<br />키워드 검색 기반 질문 워드 클라우드
-                    </>
-                  } 
-                  description={
-                    <>
-                      네이버 지식iN에서 '정신과 상담', '정신과 진료'의 최신순 검색 결과 중<br/>4000건의 질문 제목, 본문을 수집하여, 명사 키워드를 추출한 뒤 워드 클라우드로 재구성함
-                    </>
-                  }
+                  title={<>네이버 지식iN '정신과 상담', '정신과 진료'<br />키워드 검색 기반 질문 워드 클라우드</>} 
+                  description={<>네이버 지식iN에서 '정신과 상담', '정신과 진료'의 최신순 검색 결과 중<br/>4000건의 질문 제목, 본문을 수집하여, 명사 키워드를 추출한 뒤 워드 클라우드로 재구성함</>}
                 /> 
-                </div>
               </div>
-              <div className="w-full flex justify-center">
-                <div className="w-full max-w-[800px]">
-                  <img src="/images/question.png" className=""/>
-                </div>
+
+              <div className="flex flex-col justify-center">
+                <img src="/images/question.png" className="max-w-[700px]"/>
               </div>
+            </div>
+    
+            <div className="max-w-[900px] w-full">
               <p className="mb-4 text-xl">정신과 상담을 받을 수 있는 곳은 크게 세 곳으로 나뉜다. 개원의, 민간 상담센터, 그리고 보건소에서 운영하는 정신건강복지센터다. 정신과 진료를 처음 접하는 개인들은 정신과, 상담센터, 정신건강복지센터 중 어떤 곳이 자신의 필요에 맞는지 모르는 경우가 많았다. 세 곳은 어떻게 다를까? 취재진이 직접 방문해 세 곳을 비교했다.</p>
             </div>
           </section>
