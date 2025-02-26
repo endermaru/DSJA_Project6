@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef } from "react";
-import mapboxgl, { Map } from "mapbox-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { useEffect, useState, useRef } from 'react';
+import mapboxgl, { Map } from 'mapbox-gl';
 import HospitalPanel from "./HospitalPanel";
 import HospitalDetail from "./HospitalDetail";
 
@@ -23,8 +24,8 @@ const MapBox: React.FC = () => {
 
   const [loaded, setLoaded] = useState<boolean>(false);
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-  const [currentLocation, setCurrentLocation] = useState<[number, number] | null>(null);
+  const [selectedHospital, setSelectedHospital] = useState<String | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<[number, number] | [null, null]>([null, null]);
 
   useEffect(() => {
     // 병원 데이터 불러오기
@@ -46,13 +47,36 @@ const MapBox: React.FC = () => {
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/endermaru/cm7ld6py5004o01ssgl3jhewv/draft",
-      
+      style: 'mapbox://styles/endermaru/cm7ld6py5004o01ssgl3jhewv',
     });
 
     map.current.on('style.load', () => {
       setLoaded(true);
       map.current?.setFilter('hospitals_highlight', ['==', 'id', '']);
+
+      // 사용자의 현재 위치 가져오기
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setCurrentLocation([latitude, longitude])
+            // 지도 이동: flyTo 사용
+            map.current?.flyTo({
+              center: [longitude, latitude],
+              zoom: 11,
+              duration: 1000,
+              pitch: 0,
+              bearing: 0,
+              essential: true,
+            });
+          },
+          (error) => {
+            console.error("위치 정보를 가져오는 중 오류 발생: ", error);
+          }
+        );
+      } else {
+        console.error("이 브라우저는 위치 정보를 지원하지 않습니다.");
+      }
     });
 
     // hospitals 레이어 클릭 이벤트 추가
@@ -63,7 +87,6 @@ const MapBox: React.FC = () => {
       if (hospitalId) return;
 
       setSelectedHospital(hospitalId);
-      console.log(hospitalId)
 
       // hospitals_highlight 레이어 필터 설정 (선택한 ID만 표시)
       map.current?.setFilter('hospitals_highlight', ['==', 'id', hospitalId]);
@@ -98,48 +121,23 @@ const MapBox: React.FC = () => {
       }
     });
 
-    // 현재 위치 가져오기
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentLocation([longitude, latitude]);
-
-          map.current?.flyTo({
-            center: [longitude, latitude],
-            zoom: 13,
-            duration: 1000,
-          });
-        },
-        (error) => {
-          console.error("위치 정보를 가져오는 중 오류 발생:", error);
-        }
-      );
-    }
-
     return () => {
       map.current?.remove();
       map.current = null;
     };
   }, []);
 
-  // 병원 클릭 시 지도 이동
-  const handleSelectHospital = (hospital: Hospital) => {
-    setSelectedHospital(hospital);
-
-    if (map.current) {
-      map.current.flyTo({
-        center: hospital.coordinates, // [lng, lat]
-        zoom: 14,
-        duration: 1000,
-      });
-    }
-  };
-
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen">
-      <div ref={mapContainer} style={{ width: "100vw", height: "100vh" }} />
-      {/* 병원 정보 패널 (병원이 선택된 경우에만 표시) */}
+    <div className="fixed top-0 left-0 w-screen h-screen z-0">
+      {/* 지도 제목 */}
+      <h1 className="absolute top-4 left-4 text-xl font-bold bg-white p-2 rounded shadow-md z-10">
+        지도
+      </h1>
+  
+      {/* 지도 컨테이너 */}
+      <div className="z-0" ref={mapContainer} style={{ width: '100vw', height: '100vh' }} />
+  
+      {/* 병원 정보 패널 (병원이 선택된 경우에만 표시)
       {selectedHospital && (
         <div className="absolute top-10 right-4 w-80 bg-white p-4 rounded-lg shadow-lg z-10">
           <h2 className="text-lg font-semibold">{selectedHospital.name}</h2>
@@ -161,14 +159,10 @@ const MapBox: React.FC = () => {
             </p>
           )}
         </div>
-      )}
-      {/* 병원 목록 패널 */}
-      {/* <HospitalPanel hospitals={hospitals} onSelect={handleSelectHospital} currentLocation={currentLocation} /> */}
-
-      {/* 선택한 병원 상세 패널 */}
-      {/* <HospitalDetail hospital={selectedHospital} /> */}
+      )} */}
     </div>
   );
+  
 };
 
 export default MapBox;

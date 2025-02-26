@@ -3,7 +3,7 @@ import TableauLineChart from "@/components/TableauLineChart"
 import TableauBarChart from "@/components/TableauBarChart"
 import TableauMap from "@/components/TableauMap"
 import TableauStackedBarChart from "@/components/TableauStackedBarChart"
-import MapBox from "@/components/mapbox";
+import MapBox from "@/components/MapBox";
 import WordCloud from "@/components/WordCloud";
 
 
