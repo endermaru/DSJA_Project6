@@ -39,9 +39,9 @@ const questions = [
 ];
 
 const results = {
-  clinic: "정신과 의원을 추천합니다!",
-  counseling: "심리상담센터를 추천합니다!",
-  center: "정신건강복지센터를 추천합니다!",
+  clinic: "정신과 의원을 추천합니다",
+  counseling: "심리상담센터를 추천합니다",
+  center: "정신건강복지센터를 추천합니다",
 };
 
 export default function Checklist() {

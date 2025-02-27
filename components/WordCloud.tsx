@@ -107,7 +107,7 @@ const WordCloud: React.FC<WordCloudProps> = ({ path, title, description }) => {
   return (
     <div className="flex flex-col w-[710px]">
       {/* 제목 */}
-      <h2 className="text-3xl font-bold text-black text-left mb-2">{title}</h2>
+      <h2 className="text-2xl font-bold text-black text-left mb-2">{title}</h2>
 
       {/* 기존 컨테이너 */}
       <div className="relative w-full h-[510px]">
