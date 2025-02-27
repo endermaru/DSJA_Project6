@@ -1,4 +1,6 @@
+"use client";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import mapboxgl, { Map } from "mapbox-gl";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,12 +8,13 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button"
 import { pretendard } from "@/lib/fonts";
 
 const hosTypeCategories = {
-  상담센터: ["상담센터"],
-  정신건강복지센터: ["광역정신건강복지센터", "기초정신건강복지센터"],
-  의원: ["의원"],
+  "상담센터": ["상담센터"],
+  "정신건강복지센터": ["광역정신건강복지센터", "기초정신건강복지센터"],
+  "의원": ["의원"],
   '기타 정신과 기관': [
     "병원",
     "보건소",
@@ -23,6 +26,13 @@ const hosTypeCategories = {
     "종합병원",
     "한방병원",
   ],
+};
+
+const labelColors: { [key: string]: string } = {
+  상담센터: "text-[#0ea2e8]", 
+  정신건강복지센터: "text-[#ba3850]",
+  의원: "text-[#4edeaf]",
+  "기타 정신과 기관": "text-[#6e8487]",
 };
 
 
@@ -62,6 +72,7 @@ const getDistance = (coord1: [number, number] | null, coord2: [number, number] |
 const MapBox: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<Map | null>(null);
+  const router = useRouter();
 
   const [loaded, setLoaded] = useState<Boolean>(false)
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
@@ -401,15 +412,15 @@ const MapBox: React.FC = () => {
               <TableBody>
                 <TableRow>
                   <TableCell className="font-semibold w-20">기관구분</TableCell>
-                  <TableCell>{selectedHospital.hosType}</TableCell>
+                  <TableCell className="break-all">{selectedHospital.hosType}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-semibold">주소</TableCell>
-                  <TableCell>{selectedHospital.addr}</TableCell>
+                  <TableCell className="break-all">{selectedHospital.addr}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-semibold">전화번호</TableCell>
-                  <TableCell>
+                  <TableCell className="break-all">
                     {selectedHospital.phone}
                   </TableCell>
                 </TableRow>
@@ -420,7 +431,7 @@ const MapBox: React.FC = () => {
                       href={selectedHospital.homePage?.startsWith("http") ? selectedHospital.homePage : `https://${selectedHospital.homePage}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 underline"
+                      className="text-blue-500 underline break-all"
                     >
                       {selectedHospital.homePage}
                     </a>
@@ -434,13 +445,18 @@ const MapBox: React.FC = () => {
       <div className="absolute top-4 left-4 flex flex-col space-y-4">
         <Card className="pt-5 bg-emerald-400 w-fit">
           <CardContent>
-            <h1 className="text-5xl">⭐대충 멋진 서비스 이름</h1>
+            <h1 className="text-4xl ">🗺️ 마음 안내소</h1>
+            <p className="text-xl mt-3 ">나에게 맞는 정신건강지원기관을 한눈에 찾아보세요!</p>
+            <p className="text-sm ">출처: 건강보험심사평가원, 국립 정신건강정보포털, 사회서비스 전자바우처</p>
+            <Button className="bg-emerald-500 text-white hover:bg-emerald-700 text-lg" onClick={() => router.push("/")}>
+              보도문으로 돌아가기
+            </Button>
           </CardContent>
         </Card>
 
         <Card className="w-auto max-w-fit">
           <CardContent>
-            <p className="text-base font-semibold mb-1 mt-1">기관 구분 필터</p>
+            <p className="text-base font-extrabold mt-2">기관 구분 필터</p>
             {Object.entries(hosTypeCategories).map(([category, types]) => (
               <div key={category} className="flex items-center space-x-2">
                 <Checkbox
@@ -450,7 +466,9 @@ const MapBox: React.FC = () => {
                     types.forEach((type) => handleCheckboxChange(type, Boolean(checked)));
                   }}
                 />
-                <label htmlFor={category} className="text-base font-medium">{category}</label>
+                <label htmlFor={category} className={`text-base font-extrabold select-none ${labelColors[category] || "text-black"}`}>
+                  {category}
+                </label>
               </div>
             ))}
           </CardContent>
