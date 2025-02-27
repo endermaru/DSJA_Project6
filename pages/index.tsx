@@ -9,6 +9,9 @@ import TableauStackedBarChart from "@/components/TableauStackedBarChart"
 import MapBox from "@/components/MapBox";
 import WordCloud from "@/components/WordCloud";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import Checklist from "@/components/CheckList";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 
 export default function Home() {
@@ -22,6 +25,8 @@ export default function Home() {
       transition: { delay: i * 0.8, duration: 1, ease: "easeOut" },
     }),
   };
+
+  const router = useRouter();
 
   return (
     <div className={`${pretendard.variable} text-4xl font-medium text-black relative bg-white`}>
@@ -270,17 +275,11 @@ export default function Home() {
                     <p className="mb-4 text-xl text-justify items-start">취재진이 처음으로 방문한 곳은 보건소에 운영하는 정신건강복지센터였다. 정신건강복지센터의 상담소는 직원들의 사무실 기준 왼쪽 벽에 4곳 존재했다. 상담소 내부 인테리어는 내담자들을 고려한 것 때문인지 아득하고 따뜻했다. 그러나 방음이 제대로 되지 않아 본인의 상담 내용이 다른 사람에게 들리는 것에 민감한 사람들에게는 많이 불편할 수 있다.</p>
                     <div>
                       <img src="images/pic_1_1.jpg"></img>
-                      <figcaption className="mt-2 text-gray-600 text-center text-sm">
-                        상담소 내부 풍경
-                      </figcaption>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-6 pb-5 items-start">
                     <div>
                       <img src="images/pic_1_2.jpg"></img>
-                      <figcaption className="mt-2 text-gray-600 text-center text-sm">
-                      실제 취재진이 사용한 검사지
-                      </figcaption>
                     </div>
                     <p className="mb-4 text-xl text-justify items-start"> 상담사는 매우 친절했다. 직장 내 스트레스, 지금까지 마음에 담아두었던 응어리 등을 전부 풀어내게끔 유도하고, 공감하며 내담자가 안정을 취하게 했다. 상담은 약 20분 정도 진행된다. 이후 내담자의 상태가 어떤지 확인하기 위해 검사지를 작성한다. 이때 상담사는 자리를 비켜준다. 검사지는 대략 15~20분 정도 소요된다. </p>
                   </div>
@@ -387,7 +386,26 @@ export default function Home() {
           <p className="mt-4 text-xl mb-10 text-justify">누구든, 잠시 지칠 수 있기 때문이다.</p>
         </div>
       </section>
-
+      <section className="pl-10 pr-20 pb-[30px] flex flex-col items-center">
+        <div className="max-w-[900px] w-full">
+          <motion.div
+              variants={fadeInVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+            <Checklist/>
+          </motion.div>
+        </div>
+        <Button
+          className="text-3xl w-fit mx-auto py-8 mt-8 
+            bg-white border border-emerald-500 border-4 text-emerald-500 font-semibold rounded-md 
+            transition-colors hover:bg-emerald-500 hover:text-white active:bg-emerald-500"
+            onClick={() => router.push("/map")}
+        >
+          🗺️ 마음 안내소로 이동하기
+        </Button>
+      </section>
     </div>
   );
 }

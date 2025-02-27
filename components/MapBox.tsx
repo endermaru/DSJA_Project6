@@ -443,12 +443,14 @@ const MapBox: React.FC = () => {
         </Card>
       )}
       <div className="absolute top-4 left-4 flex flex-col space-y-4">
-        <Card className="pt-5 bg-emerald-400 w-fit">
+        <Card className="pt-5 bg-white w-fit">
           <CardContent>
-            <h1 className="text-4xl ">🗺️ 마음 안내소</h1>
+            <h1 className="text-4xl text-emerald-600">🗺️ 마음 안내소</h1>
             <p className="text-xl mt-3 ">나에게 맞는 정신건강지원기관을 한눈에 찾아보세요!</p>
-            <p className="text-sm ">출처: 건강보험심사평가원, 국립 정신건강정보포털, 사회서비스 전자바우처</p>
-            <Button className="bg-emerald-500 text-white hover:bg-emerald-700 text-lg" onClick={() => router.push("/")}>
+            <p className="text-sm mb-3">출처: 건강보험심사평가원, 국립 정신건강정보포털, 사회서비스 전자바우처</p>
+            <Button className="text-xl w-fit mx-auto 
+            bg-white border border-emerald-500 border-2 text-emerald-500 font-semibold rounded-md 
+            transition-colors hover:bg-emerald-500 hover:text-white active:bg-emerald-500" onClick={() => router.push("/")}>
               보도문으로 돌아가기
             </Button>
           </CardContent>
@@ -456,7 +458,7 @@ const MapBox: React.FC = () => {
 
         <Card className="w-auto max-w-fit">
           <CardContent>
-            <p className="text-base font-extrabold mt-2">기관 구분 필터</p>
+            <p className="text-base font-extrabold mt-2 mb-2">기관 구분 필터</p>
             {Object.entries(hosTypeCategories).map(([category, types]) => (
               <div key={category} className="flex items-center space-x-2">
                 <Checkbox
