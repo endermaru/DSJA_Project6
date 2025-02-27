@@ -144,7 +144,7 @@ export default function Home() {
           </section>
           <section className="pl-10 pr-20 pb-[100px] flex flex-col items-center">
             <div className="max-w-[900px] w-full">
-              <h1 className="text-4xl font-bold mb-4"> 
+              <h1 className="text-4xl font-bold mb-8"> 
                 초진 예약, 정말 어려운가?
               </h1>
               <p className="mb-8 text-xl text-justify">경기도 용인시 수지구에 거주하는 A씨는 상담 치료가 필요하다 생각해 정신과 진료를 받아보기로 결심했다. 하지만 예약 과정에서 난관에 부딪혔다. 어렵게 용기를 내 병원에 전화를 걸었지만, 초진 진료까지 2~3개월을 기다려야 한다는 답변을 받았다.</p>
