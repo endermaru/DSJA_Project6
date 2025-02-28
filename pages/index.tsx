@@ -64,7 +64,7 @@ export default function Home() {
               animate="visible"
               custom={2.5}
             >
-              “ 6달이요? ”
+              “ 6개월이요? ”
             </motion.h1>
 
             <motion.h1
