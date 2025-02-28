@@ -12,6 +12,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import Checklist from "@/components/CheckList";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import LivereComments from "@/components/LivereComments";
 
 
 export default function Home() {
@@ -428,6 +429,11 @@ export default function Home() {
         >
           🗺️ 마음 안내소로 이동하기
         </Button>
+      </section>
+      <section className="pl-10 pr-20 pb-[30px] flex flex-col items-center">
+        <div className="max-w-[900px] w-full">
+          <LivereComments/>
+        </div>
       </section>
     </div>
   );
