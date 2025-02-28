@@ -29,41 +29,62 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className={`${pretendard.variable} text-4xl font-medium text-black relative bg-white`}>
+    <div className={`${pretendard.variable} w-screen text-4xl font-medium text-black relative bg-white`}>
       
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <section className="pb-[500px]">
           <img src="/images/main.png" className="absolute top-0 left-0 w-full h-auto max-h-none object-cover z-[1]" />
-          <div className="flex w-full h-screen flex-col justify-center items-start pl-12 text-white">
+          <div className="flex w-full h-screen flex-col justify-start sm:justify-center items-start pl-4 sm:pl-8 md:pl-12 lg:pl-16 text-white">
             <motion.h1
-              className="text-6xl font-bold text-center mt-36 mb-20 z-[2]"
+              className="
+                text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl
+                font-bold text-left
+                mt-12 sm:mt-16 md:mt-20 lg:mt-24
+                mb-6 sm:mb-8 md:mb-12 lg:mb-16
+                z-[2]
+              "
               variants={fadeInVariants}
               initial="hidden"
               animate="visible"
-              custom={0.5} // 0초 후 등장
+              custom={0.5}
             >
               정신과 초진까지...
             </motion.h1>
+
             <motion.h1
-              className="text-[150px] font-extrabold text-left mb-48 z-[2]"
+              className="
+                text-[28px] sm:text-[48px] md:text-[64px] lg:text-[96px] xl:text-[120px]
+                font-extrabold text-left
+                mb-8 sm:mb-12 md:mb-16 lg:mb-32
+                z-[2]
+              "
               variants={fadeInVariants}
               initial="hidden"
               animate="visible"
-              custom={2.5} // 0.8초 후 등장
+              custom={2.5}
             >
               “ 6달이요? ”
             </motion.h1>
+
             <motion.h1
-              className="text-4xl font-bold text-left z-[2] mb-48 leading-[1.2]"
+              className="
+                text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl
+                font-bold text-left
+                leading-snug
+                mb-12 sm:mb-16 md:mb-24 lg:mb-32
+                z-[2]
+              "
               variants={fadeInVariants}
               initial="hidden"
               animate="visible"
-              custom={4} // 1.6초 후 등장
+              custom={4}
             >
               정신질환 환자 436만명 시대,<br />
               나에게 맞는 정신건강지원기관은?
             </motion.h1>
           </div>
+
+
         </section>
         <div className="w-full px-4 mx-auto">
           
